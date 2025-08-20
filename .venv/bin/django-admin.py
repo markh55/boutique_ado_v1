@@ -1,4 +1,4 @@
-#!/Users/mark/Documents/Developer/Code Along/boutique_ado_v1_backup/.venv/bin/python3.12
+#!/Users/mark/Documents/Developer/Code Along/boutique_ado_v1_backup/.venv/bin/python
 # When the django-admin.py deprecation ends, remove this script.
 import warnings
 
