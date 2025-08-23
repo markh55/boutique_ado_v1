@@ -107,6 +107,10 @@ ACCOUNT_USERNAME_MIN_LENGTH = 4
 LOGIN_URL = "/accounts/login/"
 LOGIN_REDIRECT_URL = "/"
 
+# Log out immediately on GET and redirect to homepage
+ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_LOGOUT_REDIRECT_URL = "/"
+
 WSGI_APPLICATION = "boutique_ado.wsgi.application"
 
 # Database

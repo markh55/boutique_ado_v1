@@ -19,11 +19,20 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('accounts/', include('allauth.urls')),
-    path('', include('home.urls')),
-    path('products/', include('products.urls')),
-    path('bag/', include('bag.urls')),
-    path('checkout/', include('checkout.urls')),
-    path('profile/', include('profiles.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    # Django admin
+    path("admin/", admin.site.urls),
+
+    # Authentication (login, logout, signup, password reset) via allauth
+    path("accounts/", include("allauth.urls")),
+
+    # Core apps
+    path("", include("home.urls")),
+    path("products/", include("products.urls")),
+    path("bag/", include("bag.urls")),
+    path("checkout/", include("checkout.urls")),
+    path("profile/", include("profiles.urls")),
+]
+
+# Serve media files during development
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
