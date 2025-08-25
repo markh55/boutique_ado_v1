@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
+import dj_database_url
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,8 +24,9 @@ if os.path.isfile(os.path.join(BASE_DIR, 'env.py')):
 SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = os.environ.get("DEBUG") == "True"
 ALLOWED_HOSTS = [
-    "127.0.0.1",
-    "localhost",
+    '127.0.0.1',
+    'localhost',
+    'boutique-ado-moh-58906942d74c.herokuapp.com'
 ]
 
 # Application definition
@@ -114,12 +116,18 @@ ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 WSGI_APPLICATION = "boutique_ado.wsgi.application"
 
 # Database
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+# Database
+if 'DATABASE_URL' in os.environ:
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -151,8 +159,8 @@ STRIPE_CURRENCY   = os.environ.get("STRIPE_CURRENCY", "usd")
 DEFAULT_FROM_EMAIL = 'boutiqueado@example.com'
 
 # Delivery settings
-FREE_DELIVERY_THRESHOLD = 50
-STANDARD_DELIVERY_PERCENTAGE = 10
+FREE_DELIVERY_THRESHOLD = int(os.environ.get("FREE_DELIVERY_THRESHOLD", 50))
+STANDARD_DELIVERY_PERCENTAGE = int(os.environ.get("STANDARD_DELIVERY_PERCENTAGE", 10))
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
