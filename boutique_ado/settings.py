@@ -22,7 +22,16 @@ if os.path.isfile(os.path.join(BASE_DIR, 'env.py')):
 
 # SECURITY
 SECRET_KEY = os.environ.get("SECRET_KEY")
-DEBUG = os.environ.get("DEBUG") == "True"
+if not SECRET_KEY:
+    try:
+        from env import SECRET_KEY as local_secret
+        SECRET_KEY = local_secret
+    except ImportError:
+        raise Exception("SECRET_KEY not found! Set it in Heroku config vars or env.py")
+
+# DEBUG
+DEBUG = 'DEVELOPMENT' in os.environ  # True only if DEVELOPMENT exists in env
+
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
@@ -115,7 +124,6 @@ ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 
 WSGI_APPLICATION = "boutique_ado.wsgi.application"
 
-# Database
 # Database
 if 'DATABASE_URL' in os.environ:
     DATABASES = {
