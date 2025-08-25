@@ -30,7 +30,7 @@ if not SECRET_KEY:
         raise Exception("SECRET_KEY not found! Set it in Heroku config vars or env.py")
 
 # DEBUG
-DEBUG = 'DEVELOPMENT' in os.environ
+DEBUG = os.environ.get("DEVELOPMENT") == "True"
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
@@ -124,7 +124,7 @@ WSGI_APPLICATION = "boutique_ado.wsgi.application"
 # Database
 if 'DATABASE_URL' in os.environ:
     DATABASES = {
-        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
+        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600)
     }
 else:
     DATABASES = {
@@ -157,10 +157,10 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # AWS S3 Settings for static and media files
-if 'USE_AWS' in os.environ:
+if os.environ.get('USE_AWS') == "True":
     # Bucket Config
-    AWS_STORAGE_BUCKET_NAME = 'boutique-ado-moh'  # fixed typo
-    AWS_S3_REGION_NAME = 'us-east-1'
+    AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME', 'boutique-ado-moh')
+    AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME', 'us-east-1')
     AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
