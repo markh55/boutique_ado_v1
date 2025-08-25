@@ -30,7 +30,7 @@ if not SECRET_KEY:
         raise Exception("SECRET_KEY not found! Set it in Heroku config vars or env.py")
 
 # DEBUG
-DEBUG = 'DEVELOPMENT' in os.environ  # True only if DEVELOPMENT exists in env
+DEBUG = 'DEVELOPMENT' in os.environ
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
@@ -84,7 +84,7 @@ TEMPLATES = [
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.debug",
-                "django.template.context_processors.request",  # required by allauth
+                "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.media",
