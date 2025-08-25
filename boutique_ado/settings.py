@@ -165,8 +165,9 @@ if os.environ.get('USE_AWS') == "True":
     STATICFILES_LOCATION = 'static'
     MEDIAFILES_LOCATION = 'media'
 
-    STATICFILES_STORAGE = 'custom_storages.StaticStorage'
-    DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+    # FIXED import paths
+    STATICFILES_STORAGE = 'boutique_ado.custom_storages.StaticStorage'
+    DEFAULT_FILE_STORAGE = 'boutique_ado.custom_storages.MediaStorage'
 
     STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
